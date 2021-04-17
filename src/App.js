@@ -12,19 +12,19 @@ import { NotFound } from './components/views/NotFound/NotFound';
 
 const App = () => {
   return (
-    // <Provider store={store}>
-    <BrowserRouter>
-      <MainLayout>
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route exact path="/post/add" component={PostAdd} />
-          <Route exact path="/post/:id" component={Post} />
-          <Route exact path="/post/:id/edit" component={PostEdit} />
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </MainLayout>
-    </BrowserRouter>
-    // </Provider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <MainLayout>
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route exact path="/post/add" component={PostAdd} />
+            <Route exact path="/post/:id" component={Post} />
+            <Route exact path="/post/:id/edit" component={PostEdit} />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </MainLayout>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
