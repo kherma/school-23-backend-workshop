@@ -2,22 +2,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Header.module.scss';
 import clsx from 'clsx';
+import { Navbar } from '../Navbar/Navbar';
 
 // import { connect } from 'react-redux';
 // import { reduxSelctor, reduxActionCreator } from '../../redux/store';
 
-const Component = ({ className, children }) => {
+const Component = ({ className }) => {
   return (
-    <div className={clsx(className, styles.root)}>
-      <h2>Header</h2>
-      {children}
-    </div>
+    <header className={clsx(className, styles.root)}>
+      <div className={styles.imageContaienr}></div>
+      <Navbar />
+    </header>
   );
 };
 
 Component.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
 };
 
 // const mapStateToProps = (state) => {

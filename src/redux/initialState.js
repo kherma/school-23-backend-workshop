@@ -1,6 +1,7 @@
 export const initialState = {
+  users: {},
   posts: {
-    data: { data: 'test' },
+    data: [],
     loading: {
       active: false,
       error: false,

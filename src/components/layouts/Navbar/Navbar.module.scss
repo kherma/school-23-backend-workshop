@@ -1,0 +1,31 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  width: 100%;
+  padding: 2rem 0;
+  background-color: $grey-dark-3;
+}
+
+.logo {
+  text-transform: uppercase;
+  font-family: $font-logo;
+  color: $light;
+  border-radius: 1rem;
+  font-size: 1.5rem;
+}
+
+.loginBtnContainer,
+.logoContainer,
+.navButtonsContainer {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.btnLogStatus,
+.btnNavbar {
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+}

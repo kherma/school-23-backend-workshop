@@ -14,10 +14,22 @@ html {
   overflow: hidden;
   font-size: 62.5%;
   line-height: 1.5;
+  font-family: $font-main;
 }
 
 body {
   height: 100%;
   overflow: auto;
   box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  border: none;
+  &:focus {
+    outline-color: $grey-dark-3;
+  }
 }

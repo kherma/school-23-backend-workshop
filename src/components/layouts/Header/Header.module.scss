@@ -1,4 +1,14 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.imageContaienr {
+  height: 100%;
+  width: 100%;
+  background-color: $grey-dark-2;
+}
