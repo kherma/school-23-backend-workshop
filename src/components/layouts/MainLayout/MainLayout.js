@@ -4,13 +4,18 @@ import styles from './MainLayout.module.scss';
 import clsx from 'clsx';
 import { Header } from '../Header/Header';
 
-// import { connect } from 'react-redux';
-// import { reduxSelctor, reduxActionCreator } from '../../redux/store';
+import { connect } from 'react-redux';
+import { getIsLogged } from '../../../redux/userRedux';
 
-const Component = ({ className, children }) => {
+const Component = ({ className, children, isLogged }) => {
   return (
     <div className={clsx(className, styles.root)}>
-      <Header className={styles.small} />
+      {isLogged ? (
+        <Header className={styles.small} />
+      ) : (
+        <Header className={styles.large} />
+      )}
+
       <main className={styles.pageBody}>{children}</main>
     </div>
   );
@@ -19,20 +24,17 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  isLogged: PropTypes.bool,
 };
 
-// const mapStateToProps = (state) => {
-//   someProps: reduxSelctor(state);
-// };
+const mapStateToProps = (state) => ({
+  isLogged: getIsLogged(state),
+});
 
-// const mapDispatchToProps = (dispatch) => {
-//   someAction: (arg) => dispatch(reduxActionCreator(arg));
-// };
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as MainLayout,
-  // Container as MainLayout,
+  // Component as MainLayout,
+  Container as MainLayout,
   Component as MainLayoutComponent,
 };

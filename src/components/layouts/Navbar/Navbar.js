@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import styles from './Navbar.module.scss';
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelctor, reduxActionCreator } from '../../redux/store';
+import { connect } from 'react-redux';
+import { getIsLogged } from '../../../redux/userRedux';
 
-const login = true;
-
-const Component = ({ className, children }) => {
+const Component = ({ className, children, isLogged }) => {
   return (
     <div className={clsx(className, styles.root)}>
       <div className={styles.logoContainer}>
@@ -17,20 +15,14 @@ const Component = ({ className, children }) => {
         </span>
       </div>
       <div className={styles.navButtonsContainer}>
-        {login && (
+        {isLogged && (
           <>
             <button className={styles.btnNavbar}>Home</button>
             <button className={styles.btnNavbar}>My posts</button>
           </>
         )}
       </div>
-      <div className={styles.loginBtnContainer}>
-        {login ? (
-          <button className={styles.btnLogStatus}>Logout</button>
-        ) : (
-          <button className={styles.btnLogStatus}>Login</button>
-        )}
-      </div>
+      <div className={styles.loginBtnContainer}>{children}</div>
     </div>
   );
 };
@@ -38,20 +30,13 @@ const Component = ({ className, children }) => {
 Component.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
+  isLogged: PropTypes.bool,
 };
 
-// const mapStateToProps = (state) => {
-//   someProps: reduxSelctor(state);
-// };
+const mapStateToProps = (state) => ({
+  isLogged: getIsLogged(state),
+});
 
-// const mapDispatchToProps = (dispatch) => {
-//   someAction: (arg) => dispatch(reduxActionCreator(arg));
-// };
+const Container = connect(mapStateToProps)(Component);
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
-export {
-  Component as Navbar,
-  // Container as Navbar,
-  Component as NavbarComponent,
-};
+export { Container as Navbar, Component as NavbarComponent };
