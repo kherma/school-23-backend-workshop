@@ -4,14 +4,14 @@ import styles from './PostsList.module.scss';
 import clsx from 'clsx';
 import { PostsListItem } from '../../common/PostsListItem/PostsListItem';
 
-// import { connect } from 'react-redux';
-// import { reduxSelctor, reduxActionCreator } from '../../redux/store';
+import { connect } from 'react-redux';
+import { getAll } from '../../../redux/postsRedux';
 
-const Component = ({ className, children }) => {
+const Component = ({ className, postsList }) => {
   return (
     <div className={clsx(className, styles.root)}>
-      {[...Array(10)].map((_, index) => (
-        <PostsListItem key={index} />
+      {postsList.map((postData) => (
+        <PostsListItem key={postData.id} postData={postData} />
       ))}
     </div>
   );
@@ -19,21 +19,18 @@ const Component = ({ className, children }) => {
 
 Component.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
+  postsList: PropTypes.array,
 };
 
-// const mapStateToProps = (state) => {
-//   someProps: reduxSelctor(state);
-// };
-
-// const mapDispatchToProps = (dispatch) => {
-//   someAction: (arg) => dispatch(reduxActionCreator(arg));
-// };
-
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
-export {
-  Component as PostsList,
-  // Container as PostsList,
-  Component as PostsListComponent,
+Component.defaultProps = {
+  className: '',
+  postsList: [],
 };
+
+const mapStateToProps = (state) => ({
+  postsList: getAll(state),
+});
+
+const Container = connect(mapStateToProps)(Component);
+
+export { Container as PostsList, Component as PostsListComponent };

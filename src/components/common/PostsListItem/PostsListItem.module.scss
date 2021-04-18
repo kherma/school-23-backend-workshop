@@ -21,6 +21,8 @@
         display: block;
         width: 26rem;
         height: 15rem;
+        object-fit: cover;
+        object-position: center;
       }
     }
     & .infoContainer {

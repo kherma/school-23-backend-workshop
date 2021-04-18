@@ -7,23 +7,37 @@ import { Link } from 'react-router-dom';
 // import { connect } from 'react-redux';
 // import { reduxSelctor, reduxActionCreator } from '../../redux/store';
 
-const Component = ({ className }) => {
+const Component = ({ className, postData }) => {
+  const { id, created, updated, photo, price, title } = postData;
+
+  const parseDate = (created, updated) => {
+    if (updated) return updated.toLocaleDateString().replaceAll('/', '.');
+    if (created) return created.toLocaleDateString().replaceAll('/', '.');
+    return;
+  };
+  const date = parseDate(created, updated);
   return (
     <div className={clsx(className, styles.root)}>
-      <p className={styles.date}>18.04.2021</p>
+      <p className={styles.date}>{date}</p>
       <div className={styles.dataContainer}>
         <div className={styles.imgContainer}>
-          <Link exact to="/post/1">
-            <span className={styles.img}></span>
+          <Link to={`/post/${id}`}>
+            {photo ? (
+              <img src={photo} alt="product" className={styles.img} />
+            ) : (
+              <span className={styles.img}></span>
+            )}
           </Link>
         </div>
         <div className={styles.infoContainer}>
-          <Link exact to="/post/1">
-            <h6 className={styles.title}>This is a title of a post</h6>
+          <Link to={`/post/${id}`}>
+            <h6 className={styles.title}>{title}</h6>
           </Link>
-          <p className={styles.price}>
-            <strong>$ 900</strong>
-          </p>
+          {price && (
+            <p className={styles.price}>
+              <strong>$ {price}</strong>
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -32,6 +46,12 @@ const Component = ({ className }) => {
 
 Component.propTypes = {
   className: PropTypes.string,
+  postData: PropTypes.object,
+};
+
+Component.defaultProps = {
+  className: '',
+  postData: {},
 };
 
 // const mapStateToProps = (state) => {
