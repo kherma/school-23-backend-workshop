@@ -1,0 +1,13 @@
+@import '../../../styles/settings.scss';
+
+// .root {
+// }
+
+.link {
+  padding: 2rem 4rem;
+  background-color: $dark;
+  font-size: 2rem;
+  color: $light;
+  font-weight: $font-medium;
+  text-transform: uppercase;
+}

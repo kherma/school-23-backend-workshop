@@ -13,7 +13,6 @@
   font-family: $font-logo;
   color: $light;
   border-radius: 1rem;
-  font-size: 1.5rem;
 }
 
 .loginBtnContainer,
@@ -27,4 +26,6 @@
 .btnNavbar {
   padding: 1rem 2rem;
   text-transform: uppercase;
+  background-color: $grey-dark-1;
+  color: $light;
 }

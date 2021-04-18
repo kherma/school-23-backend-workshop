@@ -33,8 +33,4 @@ const mapStateToProps = (state) => ({
 
 const Container = connect(mapStateToProps)(Component);
 
-export {
-  // Component as MainLayout,
-  Container as MainLayout,
-  Component as MainLayoutComponent,
-};
+export { Container as MainLayout, Component as MainLayoutComponent };

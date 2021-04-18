@@ -3,35 +3,39 @@ import PropTypes from 'prop-types';
 import styles from './Homepage.module.scss';
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelctor, reduxActionCreator } from '../../redux/store';
+import { WelcomeBox } from '../../common/WelcomeBox/WelcomeBox';
+import { CallToActionBox } from '../../common/CallToActionBox/CallToActionBox';
 
-const Component = ({ className, children }) => {
+import { connect } from 'react-redux';
+import { getIsLogged } from '../../../redux/userRedux';
+
+const Component = ({ className, isLogged }) => {
   return (
     <div className={clsx(className, styles.root)}>
-      <h2>Homepage</h2>
-      {children}
+      {isLogged && (
+        <section className={styles.headerSection}>
+          <WelcomeBox />
+          <CallToActionBox text={'new post'} linkTo={'/post/add'} />
+        </section>
+      )}
+      <section className={styles.posts}></section>
     </div>
   );
 };
 
 Component.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.node,
+  isLogged: PropTypes.bool,
 };
 
-// const mapStateToProps = (state) => {
-//   someProps: reduxSelctor(state);
-// };
+const mapStateToProps = (state) => ({
+  isLogged: getIsLogged(state),
+});
 
 // const mapDispatchToProps = (dispatch) => {
 //   someAction: (arg) => dispatch(reduxActionCreator(arg));
 // };
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
-export {
-  Component as Homepage,
-  // Container as Homepage,
-  Component as HomepageComponent,
-};
+export { Container as Homepage, Component as HomepageComponent };

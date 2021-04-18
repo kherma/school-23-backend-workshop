@@ -4,11 +4,13 @@
 // }
 
 .large {
-  height: 50vh;
+  transition: all 0.7s ease-in-out;
+  max-height: 40vh;
 }
 
 .small {
-  height: 30vh;
+  transition: all 0.7s ease-in-out;
+  max-height: 20vh;
 }
 
 .pageBody {
