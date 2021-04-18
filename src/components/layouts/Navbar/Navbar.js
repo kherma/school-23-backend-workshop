@@ -15,13 +15,13 @@ const Component = ({ className, children, isLogged }) => {
           <h1>Amazing Stuff</h1>
         </span>
       </div>
-      <div className={styles.navButtonsContainer}>
+      <div className={styles.navLinksContainer}>
         {isLogged && (
           <>
-            <NavLink exact to="/" className={styles.btnNavbar}>
+            <NavLink exact to="/" className={styles.navLink}>
               Home
             </NavLink>
-            <NavLink exact to="/" className={styles.btnNavbar}>
+            <NavLink exact to="/" className={styles.navLink}>
               My posts
             </NavLink>
           </>

@@ -1,0 +1,41 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  margin: 2rem 0;
+
+  & .date {
+    text-align: right;
+  }
+
+  & .dataContainer {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    background-color: $grey-light-1;
+    box-shadow: $bs-medium;
+
+    & .imgContainer {
+      padding: 1rem;
+
+      & .img {
+        background-color: $grey;
+        display: block;
+        width: 26rem;
+        height: 15rem;
+      }
+    }
+    & .infoContainer {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      & .title {
+        color: $grey-dark-3;
+      }
+      & .price {
+        text-align: right;
+        margin-right: 1rem;
+      }
+    }
+  }
+}

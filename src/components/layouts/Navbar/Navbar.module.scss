@@ -17,13 +17,13 @@
 
 .loginBtnContainer,
 .logoContainer,
-.navButtonsContainer {
+.navLinksContainer {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
 
-.btnNavbar {
+.navLink {
   padding: 1rem 2rem;
   text-transform: uppercase;
   background-color: $grey-dark-1;

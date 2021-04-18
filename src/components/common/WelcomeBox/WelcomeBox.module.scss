@@ -4,7 +4,7 @@
   margin: 1rem;
   padding: 3rem 6rem;
   background-color: $grey-light-1;
-  box-shadow: 0.3rem 0.3rem 0.5rem rgba($dark, 0.2);
+  box-shadow: $bs-medium;
 
   & h5 {
     text-transform: lowercase;

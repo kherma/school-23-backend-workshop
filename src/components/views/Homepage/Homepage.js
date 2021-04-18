@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import { WelcomeBox } from '../../common/WelcomeBox/WelcomeBox';
 import { CallToActionBox } from '../../common/CallToActionBox/CallToActionBox';
+import { PostsList } from '../../layouts/PostsList/PostsList';
 
 import { connect } from 'react-redux';
 import { getIsLogged } from '../../../redux/userRedux';
@@ -13,12 +14,14 @@ const Component = ({ className, isLogged }) => {
   return (
     <div className={clsx(className, styles.root)}>
       {isLogged && (
-        <section className={styles.headerSection}>
-          <WelcomeBox />
-          <CallToActionBox text={'new post'} linkTo={'/post/add'} />
-        </section>
+        <>
+          <section className={styles.headerSection}>
+            <WelcomeBox />
+            <CallToActionBox text={'new post'} linkTo={'/post/add'} />
+          </section>
+        </>
       )}
-      <section className={styles.posts}></section>
+      <PostsList />
     </div>
   );
 };
