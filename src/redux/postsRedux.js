@@ -13,6 +13,7 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const SET_CURRENT_POST = createActionName('SET_CURRENT_POST');
+const ADD_POST = createActionName('ADD_POST');
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
@@ -21,6 +22,10 @@ export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 export const setCurrentPost = (payload) => ({
   payload,
   type: SET_CURRENT_POST,
+});
+export const addPost = (payload) => ({
+  payload,
+  type: ADD_POST,
 });
 
 /* reducer */
@@ -42,7 +47,7 @@ export default function reducer(statePart = [], action = {}) {
           active: false,
           error: false,
         },
-        data: action.payload,
+        data: [action.payload],
       };
     }
     case FETCH_ERROR: {
@@ -58,6 +63,12 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         currentPostID: action.payload,
+      };
+    }
+    case ADD_POST: {
+      return {
+        ...statePart,
+        data: [action.payload, ...statePart.data],
       };
     }
     default:

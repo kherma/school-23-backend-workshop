@@ -4,6 +4,7 @@ import styles from './Header.module.scss';
 import clsx from 'clsx';
 import { Navbar } from '../Navbar/Navbar';
 
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getIsLogged, updateUser } from '../../../redux/userRedux';
 
@@ -13,14 +14,16 @@ const Component = ({ className, isLogged, updateUserData }) => {
       <div className={styles.imageContaienr}></div>
       <Navbar>
         {isLogged ? (
-          <button
+          <NavLink
+            exact
+            to="/"
             className={styles.btnLogStatus}
             onClick={() =>
               updateUserData({ isLogged: false, username: '', role: 'user' })
             }
           >
             Logout
-          </button>
+          </NavLink>
         ) : (
           <button
             className={styles.btnLogStatus}
