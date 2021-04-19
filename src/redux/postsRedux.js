@@ -14,6 +14,7 @@ const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const SET_CURRENT_POST = createActionName('SET_CURRENT_POST');
 const ADD_POST = createActionName('ADD_POST');
+const EDIT_POST = createActionName('EDIT_POST');
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
@@ -26,6 +27,10 @@ export const setCurrentPost = (payload) => ({
 export const addPost = (payload) => ({
   payload,
   type: ADD_POST,
+});
+export const editPost = (payload) => ({
+  payload,
+  type: EDIT_POST,
 });
 
 /* reducer */
@@ -69,6 +74,15 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         data: [action.payload, ...statePart.data],
+      };
+    }
+    case EDIT_POST: {
+      const newPosts = statePart.data.map((item) =>
+        item.id === action.payload.id ? { ...action.payload } : item
+      );
+      return {
+        ...statePart,
+        data: newPosts,
       };
     }
     default:

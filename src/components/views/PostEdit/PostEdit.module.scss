@@ -1,4 +1,68 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.formContainer {
+  & input,
+  textarea {
+    padding: 2rem;
+    font-size: 2rem;
+    &:focus {
+      outline-color: $dark;
+    }
+  }
+  & .inputGroupHeader {
+    padding: 4rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+
+    & .inputTitle {
+      width: 80%;
+    }
+
+    & .inputSubmit {
+      color: $light;
+      background-color: $dark;
+      text-transform: uppercase;
+      padding: 2rem 4rem;
+    }
+  }
+  & .inputGroupMain {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    & .imageInputContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: column;
+      padding: 2rem;
+      & .imgInput {
+        margin-bottom: 2rem;
+      }
+      & .img {
+        background-color: $grey;
+        display: inline-block;
+        width: 53rem;
+        height: 30rem;
+        object-fit: cover;
+        object-position: center;
+      }
+    }
+    & .detailsInputContainer {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-direction: column;
+      & .inputRegular {
+        width: 80%;
+      }
+    }
+  }
+  & .inputGroupDescription {
+    padding: 4rem 2rem;
+    & .inputDescription {
+      width: 100%;
+      min-height: 30rem;
+    }
+  }
+}

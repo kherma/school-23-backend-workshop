@@ -25,7 +25,7 @@ const Component = ({ className, addNewPost, isLogged, username }) => {
       created: new Date(),
       updated: null,
       status: 'published',
-      photo: imgURL,
+      photo: imgURL.file.name,
     };
     addNewPost(newPost);
     history.push('/');
@@ -66,12 +66,16 @@ const Component = ({ className, addNewPost, isLogged, username }) => {
                 onChange={(event) => {
                   setImgURL({
                     file: event.target.files.length
-                      ? URL.createObjectURL(event.target.files[0])
+                      ? event.target.files[0]
                       : '',
                   });
                 }}
               />
-              <img src={imgURL.file} alt="test" className={styles.img} />
+              <img
+                src={imgURL.file && URL.createObjectURL(imgURL.file)}
+                alt="test"
+                className={styles.img}
+              />
             </div>
             <div className={styles.detailsInputContainer}>
               {errors.email && <p>Email is required</p>}
