@@ -1,4 +1,58 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  .headerContainer {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 4rem;
+
+    & .titleContainer {
+      width: 90%;
+      text-align: justify;
+    }
+
+    & .title {
+      word-break: break-word;
+    }
+
+    & .btnContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .mainContainer {
+    & .infoContainer {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      & .img {
+        background-color: $grey;
+        display: inline-block;
+        width: 53rem;
+        height: 30rem;
+        object-fit: cover;
+        object-position: center;
+      }
+      & .dataContainer {
+        font-size: 2rem;
+        padding: 0 4rem;
+      }
+
+      & .listItem {
+        margin: 1rem 0;
+      }
+      & .price {
+        font-size: 2rem;
+        font-weight: $font-bold;
+        text-align: right;
+      }
+    }
+    & .descriptionContainer {
+      padding: 2rem;
+      & .description {
+      }
+    }
+  }
+}

@@ -4,24 +4,20 @@ import styles from './PostsListItem.module.scss';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-// import { connect } from 'react-redux';
-// import { reduxSelctor, reduxActionCreator } from '../../redux/store';
+import { parseDate } from '../../../utils/parseDate';
 
-const Component = ({ className, postData }) => {
+import { connect } from 'react-redux';
+import { setCurrentPost } from '../../../redux/postsRedux';
+
+const Component = ({ className, postData, setCurrentPostID }) => {
   const { id, created, updated, photo, price, title } = postData;
-
-  const parseDate = (created, updated) => {
-    if (updated) return updated.toLocaleDateString().replaceAll('/', '.');
-    if (created) return created.toLocaleDateString().replaceAll('/', '.');
-    return;
-  };
   const date = parseDate(created, updated);
   return (
     <div className={clsx(className, styles.root)}>
       <p className={styles.date}>{date}</p>
       <div className={styles.dataContainer}>
         <div className={styles.imgContainer}>
-          <Link to={`/post/${id}`}>
+          <Link to={`/post/${id}`} onClick={() => setCurrentPostID(id)}>
             {photo ? (
               <img src={photo} alt="product" className={styles.img} />
             ) : (
@@ -30,7 +26,7 @@ const Component = ({ className, postData }) => {
           </Link>
         </div>
         <div className={styles.infoContainer}>
-          <Link to={`/post/${id}`}>
+          <Link to={`/post/${id}`} onClick={() => setCurrentPostID(id)}>
             <h6 className={styles.title}>{title}</h6>
           </Link>
           {price && (
@@ -47,6 +43,7 @@ const Component = ({ className, postData }) => {
 Component.propTypes = {
   className: PropTypes.string,
   postData: PropTypes.object,
+  setCurrentPostID: PropTypes.func,
 };
 
 Component.defaultProps = {
@@ -54,18 +51,10 @@ Component.defaultProps = {
   postData: {},
 };
 
-// const mapStateToProps = (state) => {
-//   someProps: reduxSelctor(state);
-// };
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentPostID: (arg) => dispatch(setCurrentPost(arg)),
+});
 
-// const mapDispatchToProps = (dispatch) => {
-//   someAction: (arg) => dispatch(reduxActionCreator(arg));
-// };
+const Container = connect(null, mapDispatchToProps)(Component);
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
-
-export {
-  Component as PostsListItem,
-  // Container as PostsListItem,
-  Component as PostsListItemComponent,
-};
+export { Container as PostsListItem, Component as PostsListItemComponent };
