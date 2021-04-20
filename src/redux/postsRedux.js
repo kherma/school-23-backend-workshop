@@ -1,7 +1,10 @@
+import Axios from 'axios';
+
 /* selectors */
 export const getAll = (state) => {
-  if (state.posts.postMode === 'all')
-    return state.posts.data.filter(({ status }) => status === 'published');
+  if (state.posts.postMode === 'all') {
+    return state.posts.data;
+  }
 
   if (state.posts.postMode === 'user')
     return state.posts.data.filter(
@@ -45,6 +48,23 @@ export const changePostMode = (payload) => ({
   type: CHANGE_POST_MODE,
 });
 
+/* thunk creators */
+export const fetchPublished = () => {
+  return (dispatch, getState) => {
+    dispatch(fetchStarted());
+    const { posts } = getState();
+    if (posts.data.length === 0 && posts.loading.active === true) {
+      Axios.get('http://localhost:8000/api/posts')
+        .then((res) => {
+          dispatch(fetchSuccess(res.data));
+        })
+        .catch((err) => {
+          dispatch(fetchError(err.message || true));
+        });
+    }
+  };
+};
+
 /* reducer */
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
@@ -64,7 +84,7 @@ export default function reducer(statePart = [], action = {}) {
           active: false,
           error: false,
         },
-        data: [action.payload],
+        data: action.payload,
       };
     }
     case FETCH_ERROR: {

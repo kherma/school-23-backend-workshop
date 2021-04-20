@@ -1,5 +1,5 @@
-export const parseDate = (created, updated) => {
-  if (updated) return updated.toLocaleDateString().replace(/\//g, '.');
-  if (created) return created.toLocaleDateString().replace(/\//g, '.');
-  return new Date().toLocaleDateString().replace(/\//g, '.');
+export const parseDate = (created) => {
+  return created
+    ? new Date(created).toLocaleDateString().replace(/\//g, '.')
+    : new Date().toLocaleDateString().replace(/\//g, '.');
 };

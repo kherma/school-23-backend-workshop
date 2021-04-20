@@ -6,7 +6,7 @@ const Post = require('../models/post.model');
 router.get('/posts', async (req, res) => {
   try {
     const result = await Post.find({ status: 'published' })
-      .select('price created updated title photo')
+      .select('price created title photo')
       .sort({ created: -1 });
     if (!result) res.status(404).json({ post: 'Not found' });
     else res.json(result);

@@ -10,14 +10,14 @@ import { connect } from 'react-redux';
 import { setCurrentPost } from '../../../redux/postsRedux';
 
 const Component = ({ className, postData, setCurrentPostID }) => {
-  const { id, created, updated, photo, price, title } = postData;
-  const date = parseDate(created, updated);
+  const { _id, created, photo, price, title } = postData;
+  const date = parseDate(created);
   return (
     <div className={clsx(className, styles.root)}>
       <p className={styles.date}>{date}</p>
       <div className={styles.dataContainer}>
         <div className={styles.imgContainer}>
-          <Link to={`/post/${id}`} onClick={() => setCurrentPostID(id)}>
+          <Link to={`/post/${_id}`} onClick={() => setCurrentPostID(_id)}>
             {photo ? (
               <img src={photo} alt="product" className={styles.img} />
             ) : (
@@ -26,7 +26,7 @@ const Component = ({ className, postData, setCurrentPostID }) => {
           </Link>
         </div>
         <div className={styles.infoContainer}>
-          <Link to={`/post/${id}`} onClick={() => setCurrentPostID(id)}>
+          <Link to={`/post/${_id}`} onClick={() => setCurrentPostID(_id)}>
             <h6 className={styles.title}>{title}</h6>
           </Link>
           {price && (
