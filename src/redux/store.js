@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { initialState } from './initialState';
 
 import PostsReducer from './postsRedux';
+import PostViewReducer from './postViewRedux';
 import UserReducer from './userRedux';
 
 // define reducers
 const reducers = {
   posts: PostsReducer,
+  postView: PostViewReducer,
   user: UserReducer,
 };
 

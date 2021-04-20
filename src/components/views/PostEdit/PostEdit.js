@@ -6,7 +6,8 @@ import clsx from 'clsx';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { getCurrentPost, editPost } from '../../../redux/postsRedux';
+import { editPost } from '../../../redux/postsRedux';
+import { getCurrentPost } from '../../../redux/postViewRedux';
 import { getIsLogged } from '../../../redux/userRedux';
 
 const Component = ({ className, isLogged, currentPost, editExistingPost }) => {

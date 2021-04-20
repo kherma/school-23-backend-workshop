@@ -6,14 +6,12 @@ import clsx from 'clsx';
 import { parseDate } from '../../../utils/parseDate';
 import { CallToActionBox } from '../../common/CallToActionBox/CallToActionBox';
 
-import { useParams } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import {
-  setCurrentPost,
   fetchSinglePost,
+  setCurrentPost,
   getCurrentPost,
-} from '../../../redux/postsRedux';
+} from '../../../redux/postViewRedux';
 import { getUsername, getStatus } from '../../../redux/userRedux';
 
 const Component = ({
@@ -23,15 +21,15 @@ const Component = ({
   setCurrentPostID,
   fetchSingle,
   currentPost,
+  match,
 }) => {
-  const { id } = useParams();
-
   useEffect(() => {
-    setCurrentPostID(id);
+    setCurrentPostID(match.params.id);
     fetchSingle();
-  }, [setCurrentPostID, id, fetchSingle]);
+  }, [setCurrentPostID, match.params.id, fetchSingle]);
 
   const {
+    _id,
     author,
     created,
     updated,
@@ -54,7 +52,7 @@ const Component = ({
         </div>
         <div className={styles.btnContainer}>
           {viewEdit && (
-            <CallToActionBox linkTo={`/post/${id}/edit`} text="Edit Post" />
+            <CallToActionBox linkTo={`/post/${_id}/edit`} text="Edit Post" />
           )}
         </div>
       </header>
@@ -95,12 +93,14 @@ Component.propTypes = {
   currentStatus: PropTypes.string,
   setCurrentPostID: PropTypes.func,
   fetchSingle: PropTypes.func,
+  match: PropTypes.object,
 };
 
 Component.defaultProps = {
   className: '',
   currentPost: {},
   currentUser: '',
+  match: { params: { id: '' } },
 };
 
 const mapStateToProps = (state) => ({
