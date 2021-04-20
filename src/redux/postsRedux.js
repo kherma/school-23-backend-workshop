@@ -1,6 +1,13 @@
 /* selectors */
-export const getAll = ({ posts }) =>
-  posts.data.filter(({ status }) => status === 'published');
+export const getAll = (state) => {
+  if (state.posts.postMode === 'all')
+    return state.posts.data.filter(({ status }) => status === 'published');
+
+  if (state.posts.postMode === 'user')
+    return state.posts.data.filter(
+      ({ author }) => author === state.user.userName
+    );
+};
 export const getCurrentPost = ({ posts }) =>
   posts.data.find(({ id }) => id === posts.currentPostID);
 
@@ -15,6 +22,7 @@ const FETCH_ERROR = createActionName('FETCH_ERROR');
 const SET_CURRENT_POST = createActionName('SET_CURRENT_POST');
 const ADD_POST = createActionName('ADD_POST');
 const EDIT_POST = createActionName('EDIT_POST');
+const CHANGE_POST_MODE = createActionName('CHANGE_POST_MODE');
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
@@ -31,6 +39,10 @@ export const addPost = (payload) => ({
 export const editPost = (payload) => ({
   payload,
   type: EDIT_POST,
+});
+export const changePostMode = (payload) => ({
+  payload,
+  type: CHANGE_POST_MODE,
 });
 
 /* reducer */
@@ -83,6 +95,12 @@ export default function reducer(statePart = [], action = {}) {
       return {
         ...statePart,
         data: newPosts,
+      };
+    }
+    case CHANGE_POST_MODE: {
+      return {
+        ...statePart,
+        postMode: action.payload,
       };
     }
     default:
