@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Post.module.scss';
 import clsx from 'clsx';
@@ -6,12 +6,32 @@ import clsx from 'clsx';
 import { parseDate } from '../../../utils/parseDate';
 import { CallToActionBox } from '../../common/CallToActionBox/CallToActionBox';
 
+import { useParams } from 'react-router-dom';
+
 import { connect } from 'react-redux';
-import { getCurrentPost } from '../../../redux/postsRedux';
+import {
+  setCurrentPost,
+  fetchSinglePost,
+  getCurrentPost,
+} from '../../../redux/postsRedux';
 import { getUsername, getStatus } from '../../../redux/userRedux';
-const Component = ({ className, currentPost, currentUser, currentStatus }) => {
+
+const Component = ({
+  className,
+  currentUser,
+  currentStatus,
+  setCurrentPostID,
+  fetchSingle,
+  currentPost,
+}) => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    setCurrentPostID(id);
+    fetchSingle();
+  }, [setCurrentPostID, id, fetchSingle]);
+
   const {
-    id,
     author,
     created,
     updated,
@@ -23,6 +43,7 @@ const Component = ({ className, currentPost, currentUser, currentStatus }) => {
     phone,
     location,
   } = currentPost;
+
   const date = parseDate(created, updated);
   const viewEdit = currentUser === author || currentStatus === 'admin';
   return (
@@ -72,6 +93,8 @@ Component.propTypes = {
   currentPost: PropTypes.object,
   currentUser: PropTypes.string,
   currentStatus: PropTypes.string,
+  setCurrentPostID: PropTypes.func,
+  fetchSingle: PropTypes.func,
 };
 
 Component.defaultProps = {
@@ -86,6 +109,11 @@ const mapStateToProps = (state) => ({
   currentStatus: getStatus(state),
 });
 
-const Container = connect(mapStateToProps)(Component);
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentPostID: (arg) => dispatch(setCurrentPost(arg)),
+  fetchSingle: () => dispatch(fetchSinglePost()),
+});
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export { Container as Post, Component as PostComponent };

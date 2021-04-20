@@ -10,13 +10,10 @@ export const initialState = {
     userName: '',
     role: 'user',
   },
-  app: {
-    navLinks: [],
-  },
-  users: {},
   posts: {
     postMode: 'all',
     currentPostID: '',
+    currentPost: {},
     data: [],
     loading: {
       active: false,

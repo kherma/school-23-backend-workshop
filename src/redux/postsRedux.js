@@ -11,8 +11,7 @@ export const getAll = (state) => {
       ({ author }) => author === state.user.userName
     );
 };
-export const getCurrentPost = ({ posts }) =>
-  posts.data.find(({ id }) => id === posts.currentPostID);
+export const getCurrentPost = ({ posts }) => posts.currentPost;
 
 /* action name creator */
 const reducerName = 'posts';
@@ -20,6 +19,7 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 
 /* action types */
 const FETCH_START = createActionName('FETCH_START');
+const FETCH_SINGLE = createActionName('FETCH_SINGLE');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const SET_CURRENT_POST = createActionName('SET_CURRENT_POST');
@@ -29,6 +29,7 @@ const CHANGE_POST_MODE = createActionName('CHANGE_POST_MODE');
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
+export const fetchSingle = (payload) => ({ payload, type: FETCH_SINGLE });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
 export const setCurrentPost = (payload) => ({
@@ -65,6 +66,21 @@ export const fetchPublished = () => {
   };
 };
 
+export const fetchSinglePost = () => {
+  return (dispatch, getState) => {
+    const { posts } = getState();
+
+    Axios.get(`http://localhost:8000/api/posts/${posts.currentPostID}`)
+
+      .then((res) => {
+        dispatch(fetchSingle(res.data));
+      })
+      .catch((err) => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
 /* reducer */
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
@@ -75,6 +91,16 @@ export default function reducer(statePart = [], action = {}) {
           active: true,
           error: false,
         },
+      };
+    }
+    case FETCH_SINGLE: {
+      return {
+        ...statePart,
+        loading: {
+          active: true,
+          error: false,
+        },
+        currentPost: action.payload,
       };
     }
     case FETCH_SUCCESS: {
