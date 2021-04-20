@@ -35,10 +35,6 @@ const mapStateToProps = (state) => ({
   isLogged: getIsLogged(state),
 });
 
-// const mapDispatchToProps = (dispatch) => {
-//   someAction: (arg) => dispatch(reduxActionCreator(arg));
-// };
-
 const Container = connect(mapStateToProps)(Component);
 
 export { Container as Homepage, Component as HomepageComponent };

@@ -26,10 +26,6 @@ const mapStateToProps = (state) => ({
   userName: getUsername(state),
 });
 
-// const mapDispatchToProps = (dispatch) => {
-//   someAction: (arg) => dispatch(reduxActionCreator(arg));
-// };
-
 const Container = connect(mapStateToProps)(Component);
 
 export { Container as WelcomeBox, Component as WelcomeBoxComponent };
