@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { Redirect, useHistory } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { addPost } from '../../../redux/postsRedux';
+import { addPhotoRequest } from '../../../redux/postsRedux';
 import { getIsLogged, getUsername } from '../../../redux/userRedux';
 
 const Component = ({ className, addNewPost, isLogged, username }) => {
@@ -20,12 +20,14 @@ const Component = ({ className, addNewPost, isLogged, username }) => {
   const onSubmit = (data) => {
     const newPost = {
       ...data,
-      id: new Date().getTime(),
       author: username,
       created: new Date(),
-      updated: null,
+      updated: new Date(),
       status: 'published',
-      photo: imgURL.file.name,
+      photo: imgURL.file.name ? imgURL.file.name : null,
+      location: data.location ? data.location : null,
+      phone: data.phone ? data.phone : null,
+      price: data.price ? data.price : null,
     };
     addNewPost(newPost);
     history.push('/');
@@ -138,7 +140,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addNewPost: (arg) => dispatch(addPost(arg)),
+  addNewPost: (arg) => dispatch(addPhotoRequest(arg)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

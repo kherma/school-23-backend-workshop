@@ -19,19 +19,16 @@ const createActionName = (name) => `app/${reducerName}/${name}`;
 /* action types */
 const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
+const ADD_NEW_SUCCESS = createActionName('ADD_NEW_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
-const ADD_POST = createActionName('ADD_POST');
 const EDIT_POST = createActionName('EDIT_POST');
 const CHANGE_POST_MODE = createActionName('CHANGE_POST_MODE');
 
 /* action creators */
 export const fetchStarted = (payload) => ({ payload, type: FETCH_START });
 export const fetchSuccess = (payload) => ({ payload, type: FETCH_SUCCESS });
+export const addNewSuccess = (payload) => ({ payload, type: ADD_NEW_SUCCESS });
 export const fetchError = (payload) => ({ payload, type: FETCH_ERROR });
-export const addPost = (payload) => ({
-  payload,
-  type: ADD_POST,
-});
 export const editPost = (payload) => ({
   payload,
   type: EDIT_POST,
@@ -58,6 +55,18 @@ export const fetchPublished = () => {
   };
 };
 
+export const addPhotoRequest = (data) => {
+  return async (dispatch) => {
+    dispatch(fetchStarted());
+    try {
+      let res = await Axios.post('http://localhost:8000/api/posts/add', data);
+      dispatch(addNewSuccess(res.data));
+    } catch (error) {
+      dispatch(fetchError(error.message || true));
+    }
+  };
+};
+
 /* reducer */
 export default function reducer(statePart = [], action = {}) {
   switch (action.type) {
@@ -80,6 +89,16 @@ export default function reducer(statePart = [], action = {}) {
         data: action.payload,
       };
     }
+    case ADD_NEW_SUCCESS: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: false,
+        },
+        data: [action.payload, ...statePart.data],
+      };
+    }
     case FETCH_ERROR: {
       return {
         ...statePart,
@@ -87,12 +106,6 @@ export default function reducer(statePart = [], action = {}) {
           active: false,
           error: action.payload,
         },
-      };
-    }
-    case ADD_POST: {
-      return {
-        ...statePart,
-        data: [action.payload, ...statePart.data],
       };
     }
     case EDIT_POST: {
